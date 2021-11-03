@@ -32,7 +32,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: data.map((post: any) => ({ params: { postId: String(post.id) } })),
-    fallback: true, // flase -> ra trang not found
+    fallback: true, // fallback: 'blocking' - tự tạo html, phụ thuộc TTFB | true - router.isFallback = true | false - error 404
   }
 }
 
@@ -48,5 +48,6 @@ export const getStaticProps: GetStaticProps<any> = async (
   // -> tạo ra file html tương ứng tại thời điểm build
   return {
     props: data,
+    revalidate: 60, // SSG + revalidate -> ISR
   }
 }
