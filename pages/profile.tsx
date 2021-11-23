@@ -9,10 +9,14 @@ export interface IProfileProps {
 export default function Profile({ info }: IProfileProps) {
   if (!info) return <div>Loading...</div>
 
+  const {picture, name, gender, location} = info
   return (
     <div>
       <h2>Thông tin user</h2>
-      <img src={info.picture.large} alt="Avatar" />
+      <img src={picture.large} alt="Avatar" />
+      <p>{name.title}. {name.first} {name.last}</p>
+      <p>Gender: {gender}</p>
+      <p>Country: {location.country}</p>
     </div>
   )
 }
@@ -20,7 +24,6 @@ export default function Profile({ info }: IProfileProps) {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   context.res.setHeader('Cache-Control', 's-maxage=10, stale-while-revalidate=60')
 
-  console.log('RUNNNN');
   await new Promise(res => setTimeout(res, 3000))
 
   const res = await fetch('https://randomuser.me/api/')

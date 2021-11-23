@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { AdminLayout } from '../components/layout'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
+import { Box, Typography } from '@mui/material'
 
 // component này chỉ chạy bên phía client
 const Tada = dynamic(() => import('../components/common/Tada'), { ssr: false })
@@ -19,7 +20,6 @@ export default function AboutPage(props: IAboutPageProps) {
   // chỉ chạy bên phía client
   useEffect(() => {
     if (!userId) return
-
     ;(async () => {
       const res = await fetch(
         `https://jsonplaceholder.typicode.com/users/${userId}`
@@ -46,14 +46,15 @@ export default function AboutPage(props: IAboutPageProps) {
   if (!user) return <div>Loading...</div>
 
   return (
-    <div>
+    <Box>
+      <Typography component='h1' variant='h4' color='primary.main'>Thông tin User</Typography>
       <p>name: {user.name}</p>
       <p>email: {user.email}</p>
 
       <Tada />
 
       <button onClick={handleClickNextUser}>Next User</button>
-    </div>
+    </Box>
   )
 }
 
